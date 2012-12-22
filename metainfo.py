@@ -2,6 +2,10 @@ import subprocess
 
 from datetime import datetime, timedelta
 
+
+DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+
+
 def read(filename):
     info = _run_avprobe(filename)
 
@@ -19,7 +23,7 @@ def read(filename):
 
 
 def write(in_filename, out_filename, keywords):
-    cmd = ["avconv", "-i", in_filename, "-metadata"]
+    cmd = ["avconv", "-v", "0", "-i", in_filename, "-metadata"]
 
     for key, value in keywords.items():
         cmd.append("%s=%s" % (key, value))
@@ -39,7 +43,7 @@ def _process_int(txt):
 
 
 def _process_time(txt):
-    return datetime.strptime(txt, "%Y-%m-%d %H:%M:%S")
+    return datetime.strptime(txt, DATETIME_FORMAT)
 
 
 def _run_avprobe(filename):

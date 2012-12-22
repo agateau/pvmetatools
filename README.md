@@ -17,7 +17,7 @@ accepted. Original file is renamed to `file.orig`.
 `avmeta-adjust-time <delta> <file1> [<file2>...]`
 
 Adjust creation time of one or more files. `delta` is made of a sign, a value
-and a quantifier. For example "+1h" "-2m"
+and a quantifier. For example "1h", "2m", "2m-30s"
 
 # avmeta-time-rename
 
