@@ -9,7 +9,7 @@ not set.
 
 `avmeta-write <file> <keyword>=<value>`
 
-Set meta information for `file`. Multiple <keyword>=<value> arguments are
+Set meta information for `file`. Multiple `<keyword>=<value>` arguments are
 accepted. Original file is renamed to `file.orig`.
 
 # avmeta-adjust-time
