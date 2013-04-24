@@ -1,6 +1,9 @@
 import re
 from datetime import timedelta
 
+class InvalidDeltaError(Exception):
+    pass
+
 def parse_delta(txt):
     delta = {}
 
@@ -17,14 +20,14 @@ def parse_delta(txt):
 
         match = QUANTIFIER_RE.match(txt[pos:])
         if not match:
-            raise Exception("Invalid delta '%s', column %d" % (txt, pos + 1))
+            raise InvalidDeltaError("Invalid delta '%s', column %d" % (txt, pos + 1))
         quantifier = match.group(0)
         pos += len(quantifier)
 
         delta[quantifier] = int(value)
 
     if not delta:
-        raise Exception("Invalid delta '%s'" % txt)
+        raise InvalidDeltaError("Invalid delta '%s'" % txt)
 
     return timedelta(
         hours=delta.get("h", 0),

@@ -31,7 +31,12 @@ def main():
     if len(args) < 2:
         parser.error("Missing args")
 
-    delta = utils.parse_delta(args[0])
+    try:
+        delta = utils.parse_delta(args[0])
+    except utils.InvalidDeltaError, exc:
+        print exc
+        print "Valid delta values: '1h', '2m', '2m-30s'"
+        return 1
 
     for name in args[1:]:
         print "Processing %s" % name
