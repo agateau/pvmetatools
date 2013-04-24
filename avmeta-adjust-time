@@ -39,7 +39,10 @@ def main():
         return 1
 
     for name in args[1:]:
-        print "Processing %s" % name
+        print "Processing `%s`" % name
+        if not os.path.exists(name):
+            print "ERROR: File does not exist"
+            return 1
         adjust_time(name, delta)
 
     return 0
