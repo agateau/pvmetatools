@@ -1,9 +1,10 @@
+import json
 import subprocess
 
 from datetime import datetime, timedelta
 
 
-DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+DATETIME_FORMAT = r"%Y-%m-%d %H:%M:%S"
 
 
 def read(filename):
@@ -48,16 +49,12 @@ def _process_time(txt):
 
 def _run_avprobe(filename):
     out = subprocess.Popen( \
-        ["avprobe", "-show_format", filename], \
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE) \
+        ["avprobe", "-of", "json", "-show_format", filename], \
+        stdout=subprocess.PIPE, stderr=open("/dev/null", "w")) \
         .communicate()[0]
 
-    dct = {}
-    for line in out.splitlines():
-        if line[0] == "[":
-            continue
-        key, value = line.strip().split("=", 1)
-        if key.startswith("TAG:"):
-            key = key[4:]
-        dct[key] = value
+    # Return the "format" dict, but flatten the "tags" subdict into it
+    dct = json.loads(out)["format"]
+    tag_dct = dct.pop("tags")
+    dct.update(tag_dct)
     return dct
