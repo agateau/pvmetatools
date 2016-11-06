@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 
 DATETIME_FORMAT = r"%Y-%m-%d %H:%M:%S"
 
+PROBE_BINARY = "ffprobe"
+
 
 def read(filename):
     info = _run_avprobe(filename)
@@ -24,7 +26,7 @@ def read(filename):
 
 
 def write(in_filename, out_filename, keywords):
-    cmd = ["avconv", "-v", "0", "-i", in_filename, "-metadata"]
+    cmd = [PROBE_BINARY, "-v", "0", "-i", in_filename, "-metadata"]
 
     for key, value in keywords.items():
         cmd.append("%s=%s" % (key, value))
@@ -48,8 +50,8 @@ def _process_time(txt):
 
 
 def _run_avprobe(filename):
-    out = subprocess.Popen( \
-        ["avprobe", "-of", "json", "-show_format", filename], \
+    out = subprocess.Popen(
+        [PROBE_BINARY, "-of", "json", "-show_format", filename],
         stdout=subprocess.PIPE, stderr=open("/dev/null", "w")) \
         .communicate()[0]
 
