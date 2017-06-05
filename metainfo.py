@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 
 DATETIME_FORMAT = r"%Y-%m-%d %H:%M:%S"
 
+FFMPEG_BINARY = "ffmpeg"
 PROBE_BINARY = "ffprobe"
 
 
@@ -26,7 +27,7 @@ def read(filename):
 
 
 def write(in_filename, out_filename, keywords):
-    cmd = [PROBE_BINARY, "-v", "0", "-i", in_filename, "-metadata"]
+    cmd = [FFMPEG_BINARY, "-v", "0", "-i", in_filename, "-metadata"]
 
     for key, value in keywords.items():
         cmd.append("%s=%s" % (key, value))
