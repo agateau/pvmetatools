@@ -4,7 +4,7 @@ import subprocess
 from datetime import datetime, timedelta
 
 
-DATETIME_FORMAT = r"%Y-%m-%d %H:%M:%S"
+DATETIME_FORMATS = [r"%Y-%m-%d %H:%M:%S", r"%Y-%m-%dT%H:%M:%S"]
 
 FFMPEG_BINARY = "ffmpeg"
 PROBE_BINARY = "ffprobe"
@@ -47,7 +47,15 @@ def _process_int(txt):
 
 
 def _process_time(txt):
-    return datetime.strptime(txt, DATETIME_FORMAT)
+    if "." in txt:
+        # txt can be 2018-04-22T13:43:37.000000Z
+        txt = txt.split(".")[0]
+    for fmt in DATETIME_FORMATS:
+        try:
+            return datetime.strptime(txt, fmt)
+        except ValueError:
+            pass
+    raise ValueError("Could not parse time '%s'" % txt)
 
 
 def _run_avprobe(filename):
