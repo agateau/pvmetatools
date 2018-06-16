@@ -1,26 +1,26 @@
-# avmeta-read
+# pvmeta-video-metaread
 
-`avmeta-read <file> [<keyword>]`
+`pvmeta-video-metaread <file> [<keyword>]`
 
 Print meta information for `file`. Print all meta information if `keyword` is
 not set.
 
-# avmeta-write
+# pvmeta-video-metawrite
 
-`avmeta-write <file> <keyword>=<value>`
+`pvmeta-video-metawrite <file> <keyword>=<value>`
 
 Set meta information for `file`. Multiple `<keyword>=<value>` arguments are
 accepted. Original file is renamed to `file.orig`.
 
-# avmeta-adjust-time
+# pvmeta-video-adjusttime
 
-`avmeta-adjust-time <delta> <file1> [<file2>...]`
+`pvmeta-video-adjusttime <delta> <file1> [<file2>...]`
 
 Adjust creation time of one or more files. `delta` is made of a sign, a value
 and a quantifier. For example "1h", "2m", "2m-30s"
 
-# avmeta-time-rename
+# pvmeta-video-timerename
 
-`avmeta-time-rename <file> [<file2>...]`
+`pvmeta-video-timerename <file> [<file2>...]`
 
 Rename files based on creation date, if available.

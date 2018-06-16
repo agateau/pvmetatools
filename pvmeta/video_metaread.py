@@ -2,7 +2,7 @@
 import sys
 from optparse import OptionParser
 
-import metainfo
+from pvmeta import metainfo
 
 USAGE = "%prog <file> [<keyword>]"
 
