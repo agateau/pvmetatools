@@ -63,6 +63,7 @@ def _run_avprobe(filename):
         [PROBE_BINARY, "-of", "json", "-show_format", filename],
         stdout=subprocess.PIPE, stderr=open("/dev/null", "w")) \
         .communicate()[0]
+    out = out.decode('utf-8')
 
     # Return the "format" dict, but flatten the "tags" subdict into it
     dct = json.loads(out)["format"]
