@@ -23,6 +23,7 @@ setup(
             'pvmeta-video-autorename = pvmeta.video_autorename:main',
             'pvmeta-video-metaread = pvmeta.video_metaread:main',
             'pvmeta-video-metawrite = pvmeta.video_metawrite:main',
+            'pvmeta-photo-autorename = pvmeta.photo_autorename:main',
         ],
     },
     classifiers=[

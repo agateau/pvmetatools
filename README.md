@@ -1,3 +1,11 @@
+# pvmeta-photo-autorename
+
+Rename pictures according to their EXIF information, taking sequence number
+into account.
+
+This relies on the presence of the EXIF.Panasonic.SequenceNumber tag, so may
+not work with all cameras.
+
 # pvmeta-video-metaread
 
 `pvmeta-video-metaread <file> [<keyword>]`
