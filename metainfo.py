@@ -59,10 +59,9 @@ def _process_time(txt):
 
 
 def _run_avprobe(filename):
-    out = subprocess.Popen(
+    out = subprocess.check_output(
         [PROBE_BINARY, "-of", "json", "-show_format", filename],
-        stdout=subprocess.PIPE, stderr=open("/dev/null", "w")) \
-        .communicate()[0]
+        stderr=subprocess.DEVNULL)
     out = out.decode('utf-8')
 
     # Return the "format" dict, but flatten the "tags" subdict into it
