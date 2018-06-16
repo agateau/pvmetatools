@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# encoding: utf-8
+#!/usr/bin/env python3
 import os
 import sys
 from optparse import OptionParser
@@ -33,15 +32,15 @@ def main():
 
     try:
         delta = utils.parse_delta(args[0])
-    except utils.InvalidDeltaError, exc:
-        print exc
-        print "Valid delta values: '1h', '2m', '2m-30s'"
+    except utils.InvalidDeltaError as exc:
+        print(exc)
+        print("Valid delta values: '1h', '2m', '2m-30s'")
         return 1
 
     for name in args[1:]:
-        print "Processing `%s`" % name
+        print("Processing `%s`" % name)
         if not os.path.exists(name):
-            print "ERROR: File does not exist"
+            print("ERROR: File does not exist")
             return 1
         adjust_time(name, delta)
 
