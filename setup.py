@@ -20,10 +20,9 @@ setup(
     entry_points={
         'console_scripts': [
             'pvmeta-video-adjusttime = pvmeta.video_adjusttime:main',
-            'pvmeta-video-autorename = pvmeta.video_autorename:main',
             'pvmeta-video-metaread = pvmeta.video_metaread:main',
             'pvmeta-video-metawrite = pvmeta.video_metawrite:main',
-            'pvmeta-photo-autorename = pvmeta.photo_autorename:main',
+            'pvmeta-autorename = pvmeta.autorename:main',
         ],
     },
     classifiers=[
