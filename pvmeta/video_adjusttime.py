@@ -10,11 +10,14 @@ from pvmeta import utils
 USAGE = "%prog <delta> <file1> [<file2>...]"
 
 
+DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+
+
 def adjust_time(name, delta):
     dct = metainfo.read(name)
     date = dct["creation_time"] + delta
 
-    keywords = {"creation_time": date.strftime(metainfo.DATETIME_FORMAT)}
+    keywords = {"creation_time": date.strftime(DATETIME_FORMAT)}
 
     tmpname = "tmp-" + name
     metainfo.write(name, tmpname, keywords)
