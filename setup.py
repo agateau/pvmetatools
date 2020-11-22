@@ -16,6 +16,10 @@ setup(
     author_email='mail@agateau.com',
     license=pvmeta.__license__,
     url='https://github.com/agateau/pvmeta',
+    install_requires=[
+        'py3exiv2',
+        'arrow',
+    ],
     packages=['pvmeta'],
     entry_points={
         'console_scripts': [
