@@ -1,2 +1,2 @@
-py3exiv2==0.3.0
-arrow==0.12.1
+py3exiv2==0.8.0
+arrow==0.17.0
