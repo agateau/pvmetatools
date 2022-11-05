@@ -2,10 +2,10 @@ from datetime import datetime
 
 import pyexiv2
 
-DATE_TAGS = ('Exif.Image.DateTime',
-             'Exif.Photo.DateTimeOriginal',
+DATE_TAGS = ('Exif.Photo.DateTimeOriginal',
              'Exif.Image.DateTimeOriginal',
-             'Exif.Photo.DateTimeDigitized')
+             'Exif.Photo.DateTimeDigitized',
+             'Exif.Image.DateTime')
 
 SUBSEC_TAGS = ('Exif.Photo.SubSecTime',
                'Exif.Photo.SubSecTimeOriginal',
