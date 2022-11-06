@@ -43,6 +43,7 @@ Rename files based on creation date, if available.
 ## Running tests
 
 ```
-pip install -r dev-requirements.txt
+poetry shell
+poetry install
 pytest
 ```
