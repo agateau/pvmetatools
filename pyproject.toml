@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pvmeta"
+name = "pvmetatools"
 version = "0.1.0"
 description = "Tools to manipulate  metadata and filenames in photos and videos."
 readme = "README.md"
@@ -28,10 +28,10 @@ arrow = "0.17.0"
 pytest = "^7.2.0"
 
 [tool.poetry.scripts]
-pvmeta-video-adjusttime = "pvmeta.video_adjusttime:main"
-pvmeta-video-metaread = "pvmeta.video_metaread:main"
-pvmeta-video-metawrite = "pvmeta.video_metawrite:main"
-pvmeta-autorename = "pvmeta.autorename:main"
+pvmeta-video-adjusttime = "pvmetatools.video_adjusttime:main"
+pvmeta-video-metaread = "pvmetatools.video_metaread:main"
+pvmeta-video-metawrite = "pvmetatools.video_metawrite:main"
+pvmeta-autorename = "pvmetatools.autorename:main"
 
 
 [build-system]
