@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pvmetatools"
 version = "0.1.0"
-description = "Tools to manipulate  metadata and filenames in photos and videos."
+description = "Tools to manipulate metadata and filenames in photos and videos."
 readme = "README.md"
 authors = ["Aurelien Gateau <mail@agateau.com>"]
 homepage = "https://github.com/agateau/pvmetatools"
