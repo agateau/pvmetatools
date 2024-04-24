@@ -4,7 +4,7 @@ import os
 import re
 import sys
 
-from pvmeta import photorename, videorename
+from pvmetatools import photorename, videorename
 
 DESCRIPTION = """\
 Renames photos and videos according to the date and time encoded in their meta

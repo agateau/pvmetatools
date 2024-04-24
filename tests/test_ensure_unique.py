@@ -1,7 +1,7 @@
 import os
 import pytest
 
-from pvmeta.autorename import ensure_unique
+from pvmetatools.autorename import ensure_unique
 
 
 @pytest.mark.parametrize('original_name,new_name,dir_content,expected', [

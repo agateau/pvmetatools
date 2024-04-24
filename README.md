@@ -42,15 +42,27 @@ Adjust the creation time of one or more files. `delta` is made of a sign, a valu
 
 ## Working on the project
 
-The project is developed using [Poetry](https://python-poetry.org/):
+Create a virtualenv:
 
 ```
-# Open a shell
-poetry shell
+python -m venv .venv
+```
 
-# Install the app and its dependencies
-poetry install
+Activate it:
 
-# Run tests
+```
+. ./.venv/bin/activate
+```
+
+Install dependencies:
+
+```
+pip install -e .
+pip install -r requirements-dev.txt
+```
+
+Run tests:
+
+```
 pytest
 ```

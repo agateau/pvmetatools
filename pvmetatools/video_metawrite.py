@@ -3,7 +3,7 @@ import os
 import sys
 from optparse import OptionParser
 
-from pvmeta import metainfo
+from pvmetatools import metainfo
 
 USAGE = "%prog <file> <keyword>=<value> [<keyword>=<value>...]"
 

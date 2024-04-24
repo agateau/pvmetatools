@@ -13,12 +13,10 @@ RUN apt-get update --yes \
 RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8
 
-RUN pip3 install poetry
-
 RUN mkdir /src
 COPY . /src
 WORKDIR /src
-RUN poetry install --only main
+RUN pip install .
 
 WORKDIR /media
 ENTRYPOINT ["bash"]

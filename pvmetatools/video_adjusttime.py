@@ -3,8 +3,8 @@ import os
 import sys
 from optparse import OptionParser
 
-from pvmeta import metainfo
-from pvmeta import utils
+from pvmetatools import metainfo
+from pvmetatools import utils
 
 
 USAGE = "%prog <delta> <file1> [<file2>...]"

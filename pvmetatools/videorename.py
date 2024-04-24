@@ -1,4 +1,4 @@
-from pvmeta import metainfo
+from pvmetatools import metainfo
 
 
 def name_from_metadata(video_name):
