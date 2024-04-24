@@ -2,13 +2,14 @@
 import os
 import sys
 from optparse import OptionParser
+from typing import Iterable
 
 from pvmetatools import metainfo
 
 USAGE = "%prog <file> <keyword>=<value> [<keyword>=<value>...]"
 
 
-def parse_keywords(args):
+def parse_keywords(args: Iterable[str]) -> dict[str, str]:
     dct = {}
     for arg in args:
         key, value = arg.split("=", 1)

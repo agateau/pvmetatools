@@ -1,7 +1,7 @@
 from pvmetatools import metainfo
 
 
-def name_from_metadata(video_name):
+def name_from_metadata(video_name: str) -> str:
     dct = metainfo.read(video_name)
     date = dct["creation_time"]
     return date.strftime("%Y-%m-%d_%H-%M-%S")

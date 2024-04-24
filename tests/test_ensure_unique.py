@@ -24,7 +24,13 @@ from pvmetatools.autorename import ensure_unique
         ),
     ],
 )
-def test_ensure_unique(tmpdir, original_name, new_name, dir_content, expected):
+def test_ensure_unique(
+    tmpdir: str,
+    original_name: str,
+    new_name: str,
+    dir_content: list[str],
+    expected: str | None,
+) -> None:
     for name in dir_content:
         path = os.path.join(tmpdir, name)
         open(path, "w").close()

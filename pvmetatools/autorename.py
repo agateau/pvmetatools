@@ -15,7 +15,7 @@ data.
 PHOTO_EXTS = {".jpeg", ".jpg"}
 
 
-def ensure_unique(original_filepath, new_name_we, ext):
+def ensure_unique(original_filepath: str, new_name_we: str, ext: str) -> str | None:
     """Return a unique filepath for original_filepath, based on new_name_we and
     ext, or None if the file does not need to be renamed"""
 

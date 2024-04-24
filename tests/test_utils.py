@@ -12,6 +12,6 @@ from pvmetatools.utils import parse_delta
         ("2h-3m+4s", timedelta(hours=2, minutes=-3, seconds=4)),
     ],
 )
-def test_parse_delta(txt, delta):
+def test_parse_delta(txt: str, delta: timedelta) -> None:
     result = parse_delta(txt)
     assert result == delta

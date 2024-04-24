@@ -1,6 +1,7 @@
 import json
 import subprocess
 from datetime import timedelta
+from typing import Any
 
 import arrow
 
@@ -8,7 +9,7 @@ FFMPEG_BINARY = "ffmpeg"
 PROBE_BINARY = "ffprobe"
 
 
-def read(filename):
+def read(filename: str) -> dict[str, Any]:
     info = _run_avprobe(filename)
 
     processors = {
@@ -24,7 +25,7 @@ def read(filename):
     return info
 
 
-def write(in_filename, out_filename, keywords):
+def write(in_filename: str, out_filename: str, keywords: dict[str, str]) -> None:
     cmd = [FFMPEG_BINARY, "-v", "0", "-i", in_filename, "-metadata"]
 
     for key, value in keywords.items():
@@ -36,19 +37,19 @@ def write(in_filename, out_filename, keywords):
     subprocess.check_call(cmd)
 
 
-def _process_duration(txt):
+def _process_duration(txt: str) -> timedelta:
     return timedelta(seconds=float(txt))
 
 
-def _process_int(txt):
+def _process_int(txt: str) -> int:
     return int(txt.split(".")[0])
 
 
-def _process_time(txt):
+def _process_time(txt: str):
     return arrow.get(txt).to("local")
 
 
-def _run_avprobe(filename):
+def _run_avprobe(filename: str) -> dict[str, Any]:
     out = subprocess.check_output(
         [PROBE_BINARY, "-of", "json", "-show_format", filename],
         stderr=subprocess.DEVNULL,

@@ -16,7 +16,7 @@ SUBSEC_TAGS = (
 )
 
 
-def name_from_metadata(image_name):
+def name_from_metadata(image_name: str) -> str:
     metadata = pyexiv2.ImageMetadata(image_name)
     metadata.read()
 

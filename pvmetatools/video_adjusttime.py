@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import sys
+from datetime import timedelta
 from optparse import OptionParser
 
 from pvmetatools import metainfo, utils
@@ -11,7 +12,7 @@ USAGE = "%prog <delta> <file1> [<file2>...]"
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 
 
-def adjust_time(name, delta):
+def adjust_time(name: str, delta: timedelta) -> None:
     dct = metainfo.read(name)
     date = dct["creation_time"] + delta
 

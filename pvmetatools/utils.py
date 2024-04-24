@@ -6,7 +6,7 @@ class InvalidDeltaError(Exception):
     pass
 
 
-def parse_delta(txt):
+def parse_delta(txt: str) -> timedelta:
     delta = {}
 
     VALUE_RE = re.compile(r"[-+]?\d+")
