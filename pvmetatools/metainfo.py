@@ -45,7 +45,7 @@ def _process_int(txt: str) -> int:
     return int(txt.split(".")[0])
 
 
-def _process_time(txt: str):
+def _process_time(txt: str) -> arrow.Arrow:
     return arrow.get(txt).to("local")
 
 

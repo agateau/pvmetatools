@@ -44,3 +44,6 @@ include = [
     "tests",
 ]
 reportMissingParameterType = true
+reportMissingTypeArgument = true
+reportUnknownParameterType = true
+reportUnknownArgumentType = true
