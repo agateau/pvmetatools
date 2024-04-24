@@ -1,10 +1,8 @@
 import json
 import subprocess
-
 from datetime import timedelta
 
 import arrow
-
 
 FFMPEG_BINARY = "ffmpeg"
 PROBE_BINARY = "ffprobe"
@@ -47,14 +45,15 @@ def _process_int(txt):
 
 
 def _process_time(txt):
-    return arrow.get(txt).to('local')
+    return arrow.get(txt).to("local")
 
 
 def _run_avprobe(filename):
     out = subprocess.check_output(
         [PROBE_BINARY, "-of", "json", "-show_format", filename],
-        stderr=subprocess.DEVNULL)
-    out = out.decode('utf-8')
+        stderr=subprocess.DEVNULL,
+    )
+    out = out.decode("utf-8")
 
     # Return the "format" dict, but flatten the "tags" subdict into it
     dct = json.loads(out)["format"]

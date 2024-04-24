@@ -2,14 +2,18 @@ from datetime import datetime
 
 import pyexiv2
 
-DATE_TAGS = ('Exif.Photo.DateTimeOriginal',
-             'Exif.Image.DateTimeOriginal',
-             'Exif.Photo.DateTimeDigitized',
-             'Exif.Image.DateTime')
+DATE_TAGS = (
+    "Exif.Photo.DateTimeOriginal",
+    "Exif.Image.DateTimeOriginal",
+    "Exif.Photo.DateTimeDigitized",
+    "Exif.Image.DateTime",
+)
 
-SUBSEC_TAGS = ('Exif.Photo.SubSecTime',
-               'Exif.Photo.SubSecTimeOriginal',
-               'Exif.Photo.SubSecTimeDigitized')
+SUBSEC_TAGS = (
+    "Exif.Photo.SubSecTime",
+    "Exif.Photo.SubSecTimeOriginal",
+    "Exif.Photo.SubSecTimeDigitized",
+)
 
 
 def name_from_metadata(image_name):
@@ -40,7 +44,7 @@ def name_from_metadata(image_name):
         break
 
     try:
-        sequence_tag = metadata['Exif.Panasonic.SequenceNumber']
+        sequence_tag = metadata["Exif.Panasonic.SequenceNumber"]
         sequence = sequence_tag.value
     except KeyError:
         sequence = None
@@ -52,4 +56,6 @@ def name_from_metadata(image_name):
         new_name += "_n{:03}".format(sequence)
 
     return new_name
+
+
 # vi: ts=4 sw=4 et

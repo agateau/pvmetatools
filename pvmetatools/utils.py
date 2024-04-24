@@ -22,8 +22,7 @@ def parse_delta(txt):
 
         match = QUANTIFIER_RE.match(txt[pos:])
         if not match:
-            raise InvalidDeltaError("Invalid delta '%s', column %d"
-                                    % (txt, pos + 1))
+            raise InvalidDeltaError("Invalid delta '%s', column %d" % (txt, pos + 1))
         quantifier = match.group(0)
         pos += len(quantifier)
 
@@ -36,4 +35,4 @@ def parse_delta(txt):
         hours=delta.get("h", 0),
         minutes=delta.get("m", 0),
         seconds=delta.get("s", 0),
-        )
+    )

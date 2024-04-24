@@ -34,9 +34,9 @@ def ensure_unique(original_filepath, new_name_we, ext):
 
     count = 1
     while os.path.exists(new_filepath):
-        new_filepath = os.path.join(filedir,
-                                    "{}_dup{:03}{}".format(new_name_we, count,
-                                                           ext))
+        new_filepath = os.path.join(
+            filedir, "{}_dup{:03}{}".format(new_name_we, count, ext)
+        )
         count += 1
     return new_filepath
 
@@ -45,8 +45,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.description = DESCRIPTION
 
-    parser.add_argument("-n", "--dry-run", action="store_true",
-                        help="Simulate")
+    parser.add_argument("-n", "--dry-run", action="store_true", help="Simulate")
 
     parser.add_argument("files", nargs="+")
 

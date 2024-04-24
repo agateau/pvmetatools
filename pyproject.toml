@@ -37,3 +37,9 @@ pvmeta-video-adjusttime = "pvmetatools.video_adjusttime:main"
 pvmeta-video-metaread = "pvmetatools.video_metaread:main"
 pvmeta-video-metawrite = "pvmetatools.video_metawrite:main"
 pvmeta-autorename = "pvmetatools.autorename:main"
+
+[tool.pyright]
+include = [
+    "pvmetatools",
+    "tests",
+]
