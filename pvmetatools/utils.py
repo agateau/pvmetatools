@@ -9,7 +9,7 @@ class InvalidDeltaError(Exception):
 def parse_delta(txt):
     delta = {}
 
-    VALUE_RE = re.compile("[-+]?\d+")
+    VALUE_RE = re.compile(r"[-+]?\d+")
     QUANTIFIER_RE = re.compile("[hms]")
 
     pos = 0
