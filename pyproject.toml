@@ -47,3 +47,4 @@ reportMissingParameterType = true
 reportMissingTypeArgument = true
 reportUnknownParameterType = true
 reportUnknownArgumentType = true
+reportUnknownVariableType = true

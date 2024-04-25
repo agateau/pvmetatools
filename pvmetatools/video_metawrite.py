@@ -10,7 +10,7 @@ USAGE = "%prog <file> <keyword>=<value> [<keyword>=<value>...]"
 
 
 def parse_keywords(args: Iterable[str]) -> dict[str, str]:
-    dct = {}
+    dct: dict[str, str] = {}
     for arg in args:
         key, value = arg.split("=", 1)
         dct[key] = value

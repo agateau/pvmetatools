@@ -1,7 +1,7 @@
 import json
 import subprocess
 from datetime import timedelta
-from typing import Any
+from typing import Any, Callable
 
 import arrow
 
@@ -9,10 +9,13 @@ FFMPEG_BINARY = "ffmpeg"
 PROBE_BINARY = "ffprobe"
 
 
+ProcessFn = Callable[[str], Any]
+
+
 def read(filename: str) -> dict[str, Any]:
     info = _run_avprobe(filename)
 
-    processors = {
+    processors: dict[str, ProcessFn] = {
         "creation_time": _process_time,
         "duration": _process_duration,
         "bit_rate": _process_int,
