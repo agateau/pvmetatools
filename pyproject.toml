@@ -26,7 +26,7 @@ requires-python = ">=3.10"
 
 dependencies = [
     "py3exiv2==0.8.0",
-    "arrow==0.17.0",
+    "arrow==1.3.0",
 ]
 
 [project.urls]
