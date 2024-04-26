@@ -1,0 +1,13 @@
+default: true
+ul-indent:
+    indent: 4
+
+fenced-code-language: false
+
+line_length: false
+
+# Disable this because of .changes file entries
+first-line-h1: false
+
+# Disable this becauase of CHANGELOG.md
+no-duplicate-heading: false
