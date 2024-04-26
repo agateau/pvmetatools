@@ -1,8 +1,10 @@
 import os
+from pathlib import Path
 
 import pytest
+from data import DATA_DIR, TEST_PHOTO_PATH, TEST_VIDEO_PATH
 
-from pvmetatools.autorename import ensure_unique
+from pvmetatools import autorename
 
 
 @pytest.mark.parametrize(
@@ -35,7 +37,7 @@ def test_ensure_unique(
         path = os.path.join(tmpdir, name)
         open(path, "w").close()
 
-    result = ensure_unique(
+    result = autorename.ensure_unique(
         os.path.join(tmpdir, original_name), *os.path.splitext(new_name)
     )
 
@@ -43,3 +45,16 @@ def test_ensure_unique(
         assert result is None
     else:
         assert result == os.path.join(tmpdir, expected)
+
+
+@pytest.mark.parametrize(
+    "original_path,new_name",
+    [
+        (TEST_VIDEO_PATH, "2024-04-25_08-45-27.mp4"),
+        (TEST_PHOTO_PATH, "2024-03-03_11-41-51.969.jpg"),
+    ],
+)
+def test_create_new_name(original_path: Path, new_name: str) -> None:
+    result = autorename.create_new_name(str(original_path))
+    expected = str(DATA_DIR / new_name)
+    assert result == expected

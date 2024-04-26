@@ -41,6 +41,17 @@ def ensure_unique(original_filepath: str, new_name_we: str, ext: str) -> str | N
     return new_filepath
 
 
+def create_new_name(filepath: str) -> str | None:
+    ext = os.path.splitext(filepath)[1].lower()
+    if ext in PHOTO_EXTS:
+        module = photorename
+    else:
+        module = videorename
+
+    new_name = module.name_from_metadata(filepath)
+    return ensure_unique(filepath, new_name, ext)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.description = DESCRIPTION
@@ -52,19 +63,12 @@ def main():
     args = parser.parse_args()
 
     for filepath in sorted(args.files):
-        ext = os.path.splitext(filepath)[1].lower()
-        if ext in PHOTO_EXTS:
-            module = photorename
-        else:
-            module = videorename
-
         try:
-            new_name = module.name_from_metadata(filepath)
+            new_filepath = create_new_name(filepath)
         except Exception as exc:
             print("{}: fail: {}".format(filepath, exc))
             continue
 
-        new_filepath = ensure_unique(filepath, new_name, ext)
         if new_filepath is None:
             continue
 
