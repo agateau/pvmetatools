@@ -52,7 +52,7 @@ def create_new_name(filepath: str) -> str | None:
     return ensure_unique(filepath, new_name, ext)
 
 
-def main():
+def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser()
     parser.description = DESCRIPTION
 
@@ -60,7 +60,7 @@ def main():
 
     parser.add_argument("files", nargs="+")
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     for filepath in sorted(args.files):
         try:
@@ -80,5 +80,5 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv))
 # vi: ts=4 sw=4 et

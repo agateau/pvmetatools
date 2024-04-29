@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
 
+import data
 import pytest
-from data import DATA_DIR, TEST_PHOTO_PATH, TEST_VIDEO_PATH
 
 from pvmetatools import autorename
 
@@ -47,14 +47,40 @@ def test_ensure_unique(
         assert result == os.path.join(tmpdir, expected)
 
 
-@pytest.mark.parametrize(
-    "original_path,new_name",
-    [
-        (TEST_VIDEO_PATH, "2024-04-25_08-45-27.mp4"),
-        (TEST_PHOTO_PATH, "2024-03-03_11-41-51.969.jpg"),
-    ],
-)
+@pytest.mark.parametrize("original_path,new_name", data.TEST_PATHS_AND_EXPECTED_NAMES)
 def test_create_new_name(original_path: Path, new_name: str) -> None:
     result = autorename.create_new_name(str(original_path))
-    expected = str(DATA_DIR / new_name)
+    expected = str(data.DATA_DIR / new_name)
     assert result == expected
+
+
+def test_main_happy_path(tmp_path: Path) -> None:
+    # GIVEN a set of test files
+    data.copy_test_files(tmp_path)
+
+    # WHEN autorename is called on them
+    autorename.main([str(x) for x in tmp_path.glob("*")])
+
+    # THEN they are properly renamed
+    final_names = {x.name for x in tmp_path.glob("*")}
+    assert final_names == set(data.EXPECTED_NAMES)
+
+
+def test_main_already_renamed(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # GIVEN a set of test files, already renamed
+    data.copy_test_files(tmp_path)
+    autorename.main([str(x) for x in tmp_path.glob("*")])
+    captured = capsys.readouterr()
+
+    assert " -> " in captured.out
+
+    # WHEN autorename is called on them
+    autorename.main([str(x) for x in tmp_path.glob("*")])
+    captured = capsys.readouterr()
+
+    # THEN nothing happens
+    assert captured.out == ""
+    final_names = {x.name for x in tmp_path.glob("*")}
+    assert final_names == set(data.EXPECTED_NAMES)
