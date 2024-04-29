@@ -1,4 +1,5 @@
 import os
+import shutil
 from pathlib import Path
 
 import data
@@ -47,7 +48,9 @@ def test_ensure_unique(
         assert result == os.path.join(tmpdir, expected)
 
 
-@pytest.mark.parametrize("original_path,new_name", data.TEST_PATHS_AND_EXPECTED_NAMES)
+@pytest.mark.parametrize(
+    "original_path,new_name", data.TEST_PATHS_AND_EXPECTED_NAMES.items()
+)
 def test_create_new_name(original_path: Path, new_name: str) -> None:
     result = autorename.create_new_name(str(original_path))
     expected = str(data.DATA_DIR / new_name)
@@ -84,3 +87,29 @@ def test_main_already_renamed(
     assert captured.out == ""
     final_names = {x.name for x in tmp_path.glob("*")}
     assert final_names == set(data.EXPECTED_NAMES)
+
+
+def test_main_list_contains_invalid_image(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # GIVEN a valid image and an invalid one
+    shutil.copy(data.TEST_PHOTO_PATH, tmp_path)
+
+    truncated_image_bytes = data.TEST_PHOTO_PATH.read_bytes()[:40]
+    invalid_image_path = tmp_path / "invalid.jpg"
+    invalid_image_path.write_bytes(truncated_image_bytes)
+
+    # WHEN autorename is called on them
+    autorename.main([str(x) for x in tmp_path.glob("*")])
+    captured = capsys.readouterr()
+
+    # THEN the valid image has been properly renamed
+    # AND the invalid image is still there
+    final_names = {x.name for x in tmp_path.glob("*")}
+    assert final_names == {
+        "invalid.jpg",
+        data.TEST_PATHS_AND_EXPECTED_NAMES[data.TEST_PHOTO_PATH],
+    }
+
+    # AND the output mentions the error
+    assert f"{invalid_image_path}: fail:" in captured.out
