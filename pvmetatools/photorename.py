@@ -32,7 +32,7 @@ def name_from_metadata(image_name: str) -> str:
             continue
         break
     else:
-        raise Exception("No date tag found")
+        raise RuntimeError("No date tag found")
 
     subsec = None
     for tag_name in SUBSEC_TAGS:
