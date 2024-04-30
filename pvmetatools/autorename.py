@@ -2,7 +2,6 @@
 import argparse
 import os
 import re
-import sys
 
 from pvmetatools import photorename, videorename
 
@@ -52,7 +51,7 @@ def create_new_name(filepath: str) -> str | None:
     return ensure_unique(filepath, new_name, ext)
 
 
-def main(argv: list[str]) -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.description = DESCRIPTION
 
@@ -79,6 +78,4 @@ def main(argv: list[str]) -> int:
     return 0
 
 
-if __name__ == "__main__":
-    sys.exit(main(sys.argv))  # pragma nocover
 # vi: ts=4 sw=4 et
