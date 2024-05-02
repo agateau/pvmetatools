@@ -13,6 +13,8 @@ RUN apt-get update --yes \
 RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8
 
+RUN pip install --upgrade pip
+
 RUN mkdir /src
 COPY . /src
 WORKDIR /src
