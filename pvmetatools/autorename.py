@@ -2,6 +2,8 @@
 import argparse
 import os
 import re
+import sys
+from typing import Iterator, TextIO
 
 from pvmetatools import photorename, videorename
 
@@ -51,17 +53,32 @@ def create_new_name(filepath: str) -> str | None:
     return ensure_unique(filepath, new_name, ext)
 
 
+def read_from_stdin() -> Iterator[str]:
+    for line in sys.stdin:
+        line = line.strip()
+        if not line or line[0] == "#":
+            continue
+        yield line
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.description = DESCRIPTION
 
     parser.add_argument("-n", "--dry-run", action="store_true", help="Simulate")
 
-    parser.add_argument("files", nargs="+")
+    parser.add_argument(
+        "files", nargs="+", help="Files to rename. Use - to read them from stdin"
+    )
 
     args = parser.parse_args(argv)
 
-    for filepath in sorted(args.files):
+    if args.files == ["-"]:
+        filepaths = read_from_stdin()
+    else:
+        filepaths = iter(args.files)
+
+    for filepath in filepaths:
         try:
             new_filepath = create_new_name(filepath)
         except Exception as exc:

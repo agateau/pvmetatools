@@ -1,9 +1,12 @@
 import os
 import shutil
+import sys
+from io import StringIO
 from pathlib import Path
 
 import data
 import pytest
+from pytest import MonkeyPatch
 
 from pvmetatools import autorename
 
@@ -57,12 +60,44 @@ def test_create_new_name(original_path: Path, new_name: str) -> None:
     assert result == expected
 
 
+def test_read_from_file_object(monkeypatch: MonkeyPatch):
+    monkeypatch.setattr(
+        "sys.stdin",
+        StringIO(
+            """
+foo
+  bar
+# ignored
+
+baz
+"""
+        ),
+    )
+
+    result = autorename.read_from_stdin()
+    assert list(result) == ["foo", "bar", "baz"]
+
+
 def test_main_happy_path(tmp_path: Path) -> None:
     # GIVEN a set of test files
     data.copy_test_files(tmp_path)
 
     # WHEN autorename is called on them
     autorename.main([str(x) for x in tmp_path.glob("*")])
+
+    # THEN they are properly renamed
+    final_names = {x.name for x in tmp_path.glob("*")}
+    assert final_names == set(data.EXPECTED_NAMES)
+
+
+def test_main_happy_path_from_stdin(tmp_path: Path, monkeypatch: MonkeyPatch) -> None:
+    # GIVEN a set of test files
+    data.copy_test_files(tmp_path)
+
+    # WHEN autorename is called on them via stdin
+    fake_stdin = "\n".join(str(x) for x in tmp_path.glob("*"))
+    monkeypatch.setattr("sys.stdin", StringIO(fake_stdin))
+    autorename.main(["-"])
 
     # THEN they are properly renamed
     final_names = {x.name for x in tmp_path.glob("*")}
