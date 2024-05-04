@@ -6,3 +6,6 @@ test:
 coverage:
     coverage run --source pvmetatools -m pytest
     coverage html
+
+docker:
+    docker build -t pvmetatools .
