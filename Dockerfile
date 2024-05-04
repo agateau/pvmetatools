@@ -33,14 +33,14 @@ RUN mkdir /opt/ffmpeg \
 # Install pvmetatools & its dependencies
 COPY pvmetatools /src/pvmetatools
 COPY pyproject.toml /src
-WORKDIR /src
-RUN python3 -m venv .venv
-RUN .venv/bin/python -m pip install .
+WORKDIR /
+RUN python3 -m venv /venv
+RUN /venv/bin/python -m pip install /src
 
 #
 # The final image
 #
-FROM base
+FROM base as pvmetatools
 
 RUN apt-get install --yes --no-install-recommends \
     locales
@@ -50,7 +50,23 @@ ENV LANG=en_US.UTF-8
 
 COPY --from=build /src /src
 COPY --from=build /opt/ffmpeg /opt/ffmpeg
-ENV PATH=/src/.venv/bin:/opt/ffmpeg:$PATH
+COPY --from=build /venv /venv
+ENV PATH=/venv/bin:/opt/ffmpeg:$PATH
 
 WORKDIR /media
+ENTRYPOINT ["bash"]
+
+#
+# Image to run tests
+#
+FROM pvmetatools as pvmetatools-tests
+
+RUN apt-get install --yes --no-install-recommends \
+    python3-pip
+
+COPY requirements-dev.txt /src
+
+WORKDIR /src
+RUN /venv/bin/python -m pip install -r requirements-dev.txt
+
 ENTRYPOINT ["bash"]
