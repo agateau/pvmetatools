@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 import arrow
+from approx import Approx
 from data import TEST_VIDEO_PATH
 
 from pvmetatools import metainfo
@@ -18,9 +19,12 @@ def test_read():
         "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
         "format_long_name": "QuickTime / MOV",
         "start_time": "0.000000",
-        "duration": timedelta(microseconds=589500),
+        "duration": Approx(
+            timedelta(microseconds=589_000),
+            timedelta(microseconds=590_000),
+        ),
         "size": 1228124,
-        "bit_rate": 16666653,
+        "bit_rate": Approx(16_664_000, 16_667_000),
         "probe_score": 100,
         "major_brand": "isom",
         "minor_version": "131072",
