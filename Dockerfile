@@ -31,8 +31,6 @@ RUN mkdir /opt/ffmpeg \
         | tar --strip-components 1 -x --xz
 
 # Install pvmetatools & its dependencies
-RUN pip install --upgrade pip
-
 COPY pvmetatools /src/pvmetatools
 COPY pyproject.toml /src
 WORKDIR /src
