@@ -14,7 +14,7 @@ data.
 """
 
 
-PHOTO_EXTS = {".jpeg", ".jpg"}
+PHOTO_EXTS = {".jpeg", ".jpg", ".cr2"}
 
 
 def ensure_unique(original_filepath: str, new_name_we: str, ext: str) -> str | None:
