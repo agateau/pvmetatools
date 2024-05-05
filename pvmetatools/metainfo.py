@@ -9,6 +9,13 @@ FFMPEG_BINARY = "ffmpeg"
 PROBE_BINARY = "ffprobe"
 
 
+DATETIME_FORMATS: list[str | None] = [
+    None,
+    # Weird format found in videos recorded by Casio EX-M2 camera
+    "YYYY-MM-DD/ HH:mm",
+]
+
+
 ProcessFn = Callable[[str], Any]
 
 
@@ -49,7 +56,16 @@ def _process_int(txt: str) -> int:
 
 
 def _process_time(txt: str) -> arrow.Arrow:
-    return arrow.get(txt)
+    for datetime_format in DATETIME_FORMATS:
+        try:
+            if datetime_format:
+                args = [txt, datetime_format]
+            else:
+                args = [txt]
+            return arrow.get(*args, normalize_whitespace=True)
+        except arrow.parser.ParserError:
+            continue
+    raise ValueError(f"Could not parse '{txt}'")
 
 
 def _run_avprobe(filename: str) -> dict[str, Any]:

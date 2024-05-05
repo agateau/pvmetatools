@@ -13,6 +13,7 @@ TEST_PATHS_AND_EXPECTED_NAMES: dict[Path, str] = {
     TEST_PHOTO_PATH: "2024-03-03_11-41-51.969.jpg",
     NO_SUBSEC_PHOTO_PATH: "2013-05-20_11-30-23.jpg",
     DATA_DIR / "panasonic_seqnum.jpg": "2014-06-07_19-51-53.867_n005.jpg",
+    DATA_DIR / "cimg0030.avi": "2004-04-13_21-24-00.avi",
 }
 
 TEST_PATHS = list(TEST_PATHS_AND_EXPECTED_NAMES.keys())
