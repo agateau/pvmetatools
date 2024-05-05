@@ -52,10 +52,9 @@ def test_ensure_unique(
         assert result == os.path.join(tmpdir, expected)
 
 
-@pytest.mark.parametrize(
-    "original_path,new_name", data.TEST_PATHS_AND_EXPECTED_NAMES.items()
-)
-def test_create_new_name(original_path: Path, new_name: str) -> None:
+@pytest.mark.parametrize("original_path", data.TEST_PATHS)
+def test_create_new_name(original_path: Path) -> None:
+    new_name = data.TEST_PATHS_AND_EXPECTED_NAMES[original_path]
     result = autorename.create_new_name(str(original_path), data.TIMEZONE)
     expected = str(data.DATA_DIR / new_name)
     assert result == expected

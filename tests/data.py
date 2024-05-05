@@ -15,6 +15,7 @@ TEST_PATHS_AND_EXPECTED_NAMES: dict[Path, str] = {
     DATA_DIR / "panasonic_seqnum.jpg": "2014-06-07_19-51-53.867_n005.jpg",
 }
 
+TEST_PATHS = list(TEST_PATHS_AND_EXPECTED_NAMES.keys())
 EXPECTED_NAMES = list(TEST_PATHS_AND_EXPECTED_NAMES.values())
 
 TIMEZONE = "Europe/Paris"
