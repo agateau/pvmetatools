@@ -4,7 +4,7 @@ import functools
 import os
 import re
 import sys
-from typing import Callable, Iterator
+from typing import Iterator
 
 from pvmetatools import photorename, videorename
 
