@@ -18,9 +18,13 @@ pipx install https://github.com/agateau/pvmetatools
 
 ### pvmeta-autorename
 
-Rename photo and video files using the date stored in their metadata.
+Rename photo and video files using the date and time stored in their metadata.
 
 Photos are renamed according to their EXIF information, taking sequence number into account. This relies on the presence of the `EXIF.Panasonic.SequenceNumber` tag, so may not work with all cameras.
+
+Photo times are in local time, so the time is use as is.
+
+Video times are usually in UTC timezone. `pvmeta-autorename` uses the current timezone to convert the video, unless a different timezone is specified using the `--tz` option.
 
 ### pvmeta-video-metaread
 

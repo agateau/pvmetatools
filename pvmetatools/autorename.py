@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import argparse
+import functools
 import os
 import re
 import sys
-from typing import Iterator, TextIO
+from typing import Callable, Iterator
 
 from pvmetatools import photorename, videorename
 
@@ -42,14 +43,14 @@ def ensure_unique(original_filepath: str, new_name_we: str, ext: str) -> str | N
     return new_filepath
 
 
-def create_new_name(filepath: str) -> str | None:
+def create_new_name(filepath: str, timezone: str) -> str | None:
     ext = os.path.splitext(filepath)[1].lower()
     if ext in PHOTO_EXTS:
-        module = photorename
+        name_fcn = photorename.name_from_metadata
     else:
-        module = videorename
+        name_fcn = functools.partial(videorename.name_from_metadata, timezone=timezone)
 
-    new_name = module.name_from_metadata(filepath)
+    new_name = name_fcn(filepath)
     return ensure_unique(filepath, new_name, ext)
 
 
@@ -68,6 +69,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("-n", "--dry-run", action="store_true", help="Simulate")
 
     parser.add_argument(
+        "--tz",
+        metavar="TIMEZONE",
+        default="local",
+        help="The timezone to use for videos. Defaults to the local timezone.",
+    )
+
+    parser.add_argument(
         "files", nargs="+", help="Files to rename. Use - to read them from stdin"
     )
 
@@ -80,7 +88,7 @@ def main(argv: list[str] | None = None) -> int:
 
     for filepath in filepaths:
         try:
-            new_filepath = create_new_name(filepath)
+            new_filepath = create_new_name(filepath, args.tz)
         except Exception as exc:
             print("{}: fail: {}".format(filepath, exc))
             continue

@@ -1,6 +1,5 @@
 import os
 import shutil
-import sys
 from io import StringIO
 from pathlib import Path
 
@@ -9,6 +8,8 @@ import pytest
 from pytest import MonkeyPatch
 
 from pvmetatools import autorename
+
+TIMEZONE_ARGS = ["--tz", data.TIMEZONE]
 
 
 @pytest.mark.parametrize(
@@ -55,7 +56,7 @@ def test_ensure_unique(
     "original_path,new_name", data.TEST_PATHS_AND_EXPECTED_NAMES.items()
 )
 def test_create_new_name(original_path: Path, new_name: str) -> None:
-    result = autorename.create_new_name(str(original_path))
+    result = autorename.create_new_name(str(original_path), data.TIMEZONE)
     expected = str(data.DATA_DIR / new_name)
     assert result == expected
 
@@ -83,7 +84,7 @@ def test_main_happy_path(tmp_path: Path) -> None:
     data.copy_test_files(tmp_path)
 
     # WHEN autorename is called on them
-    autorename.main([str(x) for x in tmp_path.glob("*")])
+    autorename.main([str(x) for x in tmp_path.glob("*")] + TIMEZONE_ARGS)
 
     # THEN they are properly renamed
     final_names = {x.name for x in tmp_path.glob("*")}
@@ -97,7 +98,7 @@ def test_main_happy_path_from_stdin(tmp_path: Path, monkeypatch: MonkeyPatch) ->
     # WHEN autorename is called on them via stdin
     fake_stdin = "\n".join(str(x) for x in tmp_path.glob("*"))
     monkeypatch.setattr("sys.stdin", StringIO(fake_stdin))
-    autorename.main(["-"])
+    autorename.main(["-"] + TIMEZONE_ARGS)
 
     # THEN they are properly renamed
     final_names = {x.name for x in tmp_path.glob("*")}
@@ -109,13 +110,13 @@ def test_main_already_renamed(
 ) -> None:
     # GIVEN a set of test files, already renamed
     data.copy_test_files(tmp_path)
-    autorename.main([str(x) for x in tmp_path.glob("*")])
+    autorename.main([str(x) for x in tmp_path.glob("*")] + TIMEZONE_ARGS)
     captured = capsys.readouterr()
 
     assert " -> " in captured.out
 
     # WHEN autorename is called on them
-    autorename.main([str(x) for x in tmp_path.glob("*")])
+    autorename.main([str(x) for x in tmp_path.glob("*")] + TIMEZONE_ARGS)
     captured = capsys.readouterr()
 
     # THEN nothing happens

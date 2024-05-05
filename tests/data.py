@@ -17,6 +17,8 @@ TEST_PATHS_AND_EXPECTED_NAMES: dict[Path, str] = {
 
 EXPECTED_NAMES = list(TEST_PATHS_AND_EXPECTED_NAMES.values())
 
+TIMEZONE = "Europe/Paris"
+
 
 def copy_test_files(dst_path: Path) -> None:
     for path in TEST_PATHS_AND_EXPECTED_NAMES.keys():

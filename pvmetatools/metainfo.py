@@ -49,7 +49,7 @@ def _process_int(txt: str) -> int:
 
 
 def _process_time(txt: str) -> arrow.Arrow:
-    return arrow.get(txt).to("local")
+    return arrow.get(txt)
 
 
 def _run_avprobe(filename: str) -> dict[str, Any]:
